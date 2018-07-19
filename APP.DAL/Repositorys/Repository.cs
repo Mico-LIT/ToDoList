@@ -18,6 +18,17 @@ namespace APP.DAL.Repositorys
         {
             Connection = connection;
         }
+        public IEnumerable<T> Gets(string query)
+        {
+            IList<T> entities;
+
+            using (var connection = Connection.OpenConnection())
+            {
+                entities = connection.Query<T>(query, CommandType.Text).ToList();
+            }
+
+            return entities;
+        }
 
         public IEnumerable<T> Get(string query, object arguments)
         {
