@@ -9,10 +9,10 @@ namespace APP.Controllers
 {
     public class HomeController : Controller
     {
-        MobileContext db = new MobileContext(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\миша\source\repos\APP\APP\App_Data\Database1.mdf;Integrated Security=True");
+        MobileContext db = new MobileContext(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Repositories\test\APP\App_Data\Database1.mdf;Integrated Security=True");
         public ActionResult Index()
         {
-            var ff = db.ToDoTask.Get(1);
+            var ff = db.ToDoTask.Get(40);
 
             return View();
         }

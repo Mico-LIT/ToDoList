@@ -14,15 +14,13 @@ namespace APP.DAL.Dapper
 {
     public class MobileContext
     {
-        ToDoTaskRepository taskRepository;
+        TaskListRepository taskRepository;
 
-        //public Repository<Phone> Phone { get; set; }
-        public IRepository<ToDoTask> ToDoTask { get { return taskRepository; } }
+        public IRepository<TaskList> ToDoTask { get { return taskRepository; } }
 
         public MobileContext(string connstr) //: base(connstr)
         {
-            //Phone = new Repository<Phone>(new SqlConnectionFactory(connstr));
-            taskRepository = new ToDoTaskRepository(new SqlConnectionFactory(connstr));
+            taskRepository = new TaskListRepository(new SqlConnectionFactory(connstr));
         }
         
     }
