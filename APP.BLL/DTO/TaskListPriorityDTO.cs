@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APP.DAL.Entities
+namespace APP.BLL.DTO
 {
-
-    public class Phone
+    public class TaskListPriorityDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Company { get; set; }
-        public decimal Price { get; set; }
     }
 }

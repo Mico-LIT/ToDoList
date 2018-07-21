@@ -17,14 +17,51 @@ namespace APP.DAL.Repositorys
         {
             Connection = conn;
         }
-        public void Create(TaskList item)
+
+        public int Create(TaskList item)
         {
-            throw new NotImplementedException();
+            int ID = 0;
+            using (var connection = Connection.OpenConnection())
+            {
+                ID = connection.Query<int>(@"
+                        INSERT INTO dbo.TaskList
+                        (
+                          Mess
+                         , DeadLine
+                         , DateStart
+                         , DateEnd
+                         , TaskListPriorityID
+                        )
+                        VALUES
+                        (
+                          @Mess
+                         , @DeadLine
+                         , @DateStart
+                         , @DateEnd
+                         , @TaskListPriorityID
+                        ); 
+                        SELECT CAST(SCOPE_IDENTITY() as int)
+                        ", new
+                {
+                    item.Mess,
+                    item.DeadLine,
+                    item.DateStart,
+                    item.DateEnd,
+                    TaskListPriorityID = item.Priority.Id
+                }).Single();
+            }
+            return ID > 0 ? ID : 0;
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = Connection.OpenConnection())
+            {
+                connection.Execute(@"
+                DELETE FROM dbo.TaskList
+                WHERE
+                ID = @ID",new { ID = id});
+            }
         }
 
         public TaskList Get(int id)
@@ -62,19 +99,23 @@ namespace APP.DAL.Repositorys
             return toDoTask;
         }
 
-        public void Update(TaskList item)
+        public bool Update(TaskList item)
         {
+            int result;
             using (var connection = Connection.OpenConnection())
             {
-                connection.Execute(
+                result = connection.Execute(String.Format(
                     @"UPDATE TaskList 
-                SET Mess = N''
-                   ,DeadLine = GETDATE()
-                   ,DateStart = DEFAULT
-                   ,DateEnd = GETDATE()
-                   ,TaskListPriorityID = 0
-                WHERE ID = @ID;");
+                SET Mess = @Mess
+                   ,DeadLine = @DeadLine
+                   ,DateStart = @DateStart
+                   ,DateEnd = @DateEnd
+                   ,TaskListPriorityID = @TaskListPriorityID
+                WHERE ID = @ID;", item.Mess),
+                new {item.Id,item.Mess,item.DeadLine,item.DateStart,item.DateEnd, TaskListPriorityID=item.Priority.Id });
             };
+
+            return result > 0 ? true : false;
         }
     }
 }

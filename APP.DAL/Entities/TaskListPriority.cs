@@ -11,4 +11,11 @@ namespace APP.DAL.Entities
         public int Id { get; set; }
         public string Name { get; set; }
     }
+
+    public enum TaskListPriorityEnum
+    {
+        Высокий=1,
+        Средний=2,
+        Низкий=3
+    }
 }

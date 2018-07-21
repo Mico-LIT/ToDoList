@@ -16,5 +16,7 @@ CREATE TABLE TaskList(
   TaskListPriorityID INT FOREIGN KEY REFERENCES TaskListPriority(ID)
   )
 
-  INSERT TaskList (Mess, DeadLine, TaskListPriorityID, StatusTaskID)
-  VALUES (N'Первая задача', '25.07.18', 1, 0);
+  INSERT TaskList (Mess, DeadLine, TaskListPriorityID)
+  VALUES (N'Первая задача', '2018.12.31', 1);
+
+  select * from TaskList
