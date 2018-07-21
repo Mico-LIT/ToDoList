@@ -50,7 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DTO\TaskListDTO.cs" />
     <Compile Include="DTO\TaskListPriorityDTO.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />

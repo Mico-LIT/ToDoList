@@ -53,15 +53,18 @@ namespace APP.DAL.Repositorys
             return ID > 0 ? ID : 0;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            int result;
             using (var connection = Connection.OpenConnection())
             {
-                connection.Execute(@"
+                result = connection.Execute(@"
                 DELETE FROM dbo.TaskList
                 WHERE
                 ID = @ID",new { ID = id});
             }
+
+            return result > 0 ? true : false;
         }
 
         public TaskList Get(int id)

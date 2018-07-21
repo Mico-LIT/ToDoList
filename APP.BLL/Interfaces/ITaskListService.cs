@@ -11,6 +11,9 @@ namespace APP.BLL.Interfaces
     {
         void CreateNewTask(TaskListDTO taskList);
         TaskListDTO GetTask(int? id);
-        IEnumerable<TaskListDTO> GetTasks();
+        IEnumerable<TaskListDTO> GetTaskAll();
+        bool Delete(int ID);
+        bool Update(TaskListDTO taskListDTO);
+        IEnumerable<TaskListPriorityDTO> PriorityAll();
     }
 }

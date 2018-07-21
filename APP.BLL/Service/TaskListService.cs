@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using APP.BLL.DTO;
 using APP.DAL.Entities;
-using APP.DAL.Dapper;
 using APP.BLL.Interfaces;
 using APP.BLL.Infrastructure;
 using APP.DAL.Interfaces;
@@ -51,17 +50,44 @@ namespace APP.BLL.Service
 
             var mapper = new AutoMapper.MapperConfiguration(
                     cfg => cfg.CreateMap<TaskList, TaskListDTO>()).CreateMapper();
-
             return mapper.Map<TaskList, TaskListDTO>(DB.ToDoTask.Get(id.Value));
 
         }
 
-        public IEnumerable<TaskListDTO> GetTasks()
+        public IEnumerable<TaskListDTO> GetTaskAll()
         {
             var mapper = 
                 new AutoMapper.MapperConfiguration(
                     cfg => cfg.CreateMap<TaskList, TaskListDTO>()).CreateMapper();
             return mapper.Map<IEnumerable<TaskList>, List<TaskListDTO>>(DB.ToDoTask.GetAll());
+        }
+
+        public bool Delete(int ID)
+        {
+           return DB.ToDoTask.Delete(ID);
+        }
+
+        public IEnumerable<TaskListPriorityDTO> PriorityAll()
+        {
+            var mapper =
+                 new AutoMapper.MapperConfiguration(cfg => cfg.CreateMap<TaskListPriority, TaskListPriorityDTO>()).CreateMapper();
+            var result = mapper.Map<IEnumerable<TaskListPriority>, IEnumerable<TaskListPriorityDTO>>(DB.Priority.GetAll());
+            return result;
+        }
+
+        public bool Update(TaskListDTO taskListDTO)
+        {
+            TaskList taskList = new TaskList()
+            {
+                Id = taskListDTO.Id,
+                DateEnd = taskListDTO.DateEnd,
+                DateStart = taskListDTO.DateStart,
+                DeadLine = taskListDTO.DeadLine,
+                Mess = taskListDTO.Mess,
+                Priority = new TaskListPriority() { Id = taskListDTO.Priority.Id }
+            };
+
+            return DB.ToDoTask.Update(taskList);
         }
     }
 }

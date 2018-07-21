@@ -9,6 +9,7 @@ namespace APP.DAL.Interfaces
 {
     public interface ITaskListContext
     {
-        IRepository<TaskList> ToDoTask { get;}
+        IRepository<TaskList> ToDoTask { get; }
+        IRepository<TaskListPriority> Priority { get; }
     }
 }

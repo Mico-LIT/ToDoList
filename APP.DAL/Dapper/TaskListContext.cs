@@ -17,6 +17,7 @@ namespace APP.DAL.Dapper
         readonly string Connection;
 
         TaskListRepository taskRepository;
+        TaskListPriorityRepository priority;
 
         public IRepository<TaskList> ToDoTask {
             get
@@ -24,6 +25,18 @@ namespace APP.DAL.Dapper
                 if (taskRepository == null)
                     taskRepository = new TaskListRepository(new SqlConnectionFactory(Connection));
                 return taskRepository;
+            }
+        }
+
+        public IRepository<TaskListPriority> Priority
+        {
+            get
+            {
+                if (priority == null)
+                {
+                    priority = new TaskListPriorityRepository(new SqlConnectionFactory(Connection));
+                }
+                return priority;
             }
         }
 

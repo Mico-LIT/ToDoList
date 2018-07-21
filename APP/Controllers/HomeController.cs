@@ -19,7 +19,7 @@ namespace APP.Controllers
 
         public ActionResult Index()
         {
-            var ff = TLService.GetTasks();
+            var ff = TLService.GetTaskAll();
             var gg = TLService.GetTask(9);
 
             //var ff2 = db.ToDoTask.Update(new DAL.Entities.TaskList() {

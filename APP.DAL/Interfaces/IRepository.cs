@@ -12,6 +12,6 @@ namespace APP.DAL.Interfaces
         T Get(int id);
         int Create(T item);
         bool Update(T item);
-        void Delete(int id);
+        bool Delete(int id);
     }
 }
