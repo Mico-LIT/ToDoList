@@ -20,3 +20,4 @@ CREATE TABLE TaskList(
   VALUES (N'Первая задача', '2018.12.31', 1);
 
   select * from TaskList
+  select * from TaskListPriority

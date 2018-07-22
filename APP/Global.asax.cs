@@ -25,7 +25,7 @@ namespace APP
 
             // внедрение зависимостей
             NinjectModule TaskListModule = new TaskListModule();
-            NinjectModule serviceModule = new ServiceModule(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\test\APP\App_Data\Database1.mdf;Integrated Security=True");
+            NinjectModule serviceModule = new ServiceModule(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\test\APP\App_Data\Database2.mdf;Integrated Security=True");
             var kernel = new StandardKernel(TaskListModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }

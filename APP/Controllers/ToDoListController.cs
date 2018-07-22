@@ -7,6 +7,7 @@ using APP.Models;
 using APP.BLL.Interfaces;
 using APP.BLL.DTO;
 using AutoMapper;
+using PagedList;
 
 namespace APP.Controllers
 {
@@ -19,11 +20,14 @@ namespace APP.Controllers
         }
 
         // GET: ToDoList
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskListDTO, TaskListViewModel>()).CreateMapper();
             var list = mapper.Map<IEnumerable<TaskListDTO>, IEnumerable<TaskListViewModel>>(tlService.GetTaskAll());
-            return View(list);
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(list.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: ToDoList/Details/5
@@ -51,25 +55,25 @@ namespace APP.Controllers
         [HttpPost]
         public ActionResult Create(TaskListViewModel viewModel)
         {
-            try
-            {
-                TaskListDTO taskListDTO = new TaskListDTO()
+                try
                 {
-                    Priority = new TaskListPriorityDTO() { Id = int.Parse(viewModel.PriorityID) },
-                    DateEnd = viewModel.DateEnd,
-                    DateStart = viewModel.DateStart.Value,
-                    DeadLine = viewModel.DeadLine.Value,
-                    Mess = viewModel.Mess
-                };
+                    var mapper = new MapperConfiguration(
+                        cfg => cfg.CreateMap<TaskListViewModel, TaskListDTO>().
+                        ForMember(x => x.Priority,
+                        y => 
+                        y.MapFrom(sours => new TaskListPriorityDTO()
+                        {
+                            Id = int.Parse(sours.PriorityID)
+                        }))).CreateMapper();
 
-                tlService.CreateNewTask(taskListDTO);
+                    tlService.CreateNewTask(mapper.Map<TaskListViewModel, TaskListDTO>(viewModel));
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
         }
 
         // GET: ToDoList/Edit/5
@@ -78,12 +82,10 @@ namespace APP.Controllers
             if (id == null) return RedirectToAction("Index");
 
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TaskListPriorityDTO, TaskListPriorityViewModel>()).CreateMapper();
-            var Prioritylist = mapper.Map<IEnumerable<TaskListPriorityDTO>, IEnumerable<TaskListPriorityViewModel>>(tlService.PriorityAll());
-            ViewBag.Priority = Prioritylist;
+            ViewBag.Priority = mapper.Map<IEnumerable<TaskListPriorityDTO>, IEnumerable<TaskListPriorityViewModel>>(tlService.PriorityAll());
 
             var mapper2 = new MapperConfiguration(cfg => cfg.CreateMap<TaskListDTO, TaskListViewModel>()).CreateMapper();
-            var list2 = mapper2.Map<TaskListDTO, TaskListViewModel>(tlService.GetTask(id.Value));
-            return View(list2);
+            return View(mapper2.Map<TaskListDTO, TaskListViewModel>(tlService.GetTask(id.Value)));
         }
 
         // POST: ToDoList/Edit/5

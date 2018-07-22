@@ -92,7 +92,8 @@ namespace APP.DAL.Repositorys
             {
                 toDoTask = connection.Query<TaskList, TaskListPriority, TaskList>(
                     @" SELECT t.*,tt.* FROM TaskList t 
-                        left join TaskListPriority tt on tt.Id = t.TaskListPriorityID",
+                        left join TaskListPriority tt on tt.Id = t.TaskListPriorityID
+                        order by tt.ID asc",
                     (t, tt) =>
                     {
                         t.Priority = tt;

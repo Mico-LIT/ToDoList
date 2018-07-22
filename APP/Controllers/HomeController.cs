@@ -10,39 +10,8 @@ namespace APP.Controllers
     public class HomeController : Controller
     {
 
-        ITaskListService TLService;
-
-        public HomeController(ITaskListService service)
-        {
-            TLService = service;
-        }
-
         public ActionResult Index()
         {
-            var ff = TLService.GetTaskAll();
-            var gg = TLService.GetTask(9);
-
-            //var ff2 = db.ToDoTask.Update(new DAL.Entities.TaskList() {
-            //    Id=3,
-            //    DateStart=DateTime.Today.Date,
-            //    DeadLine= DateTime.Today.AddDays(20),
-            //    Mess="ОК123",
-            //    Priority=new DAL.Entities.TaskListPriority() { Id = (int)DAL.Entities.TaskListPriorityEnum.Низкий}
-
-            //});
-
-            //var ff3 = db.ToDoTask.Create(new DAL.Entities.TaskList()
-            //{
-            //    DateStart = DateTime.Today.Date,
-            //    DeadLine = DateTime.Today.AddDays(20),
-            //    DateEnd = DateTime.Today.AddDays(10),
-            //    Mess = "Отчет",
-            //    Priority = new DAL.Entities.TaskListPriority() { Id = (int)DAL.Entities.TaskListPriorityEnum.Высокий }
-
-            //});
-
-            //var ff4 = db.ToDoTask.GetAll();
-
             return View();
         }
 
