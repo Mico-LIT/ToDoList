@@ -1,3 +1,4 @@
 # Dapper_ToDoList
-ORM Dapper 
-многоуровневая архитектура: DAL,BLL,PL
+ASP.NET MVC, ORM Dapper 
+
+Многоуровневая архитектура: DAL, BLL, PL
